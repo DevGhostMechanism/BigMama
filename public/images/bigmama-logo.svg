@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="80" height="80">
+  <!-- White fill + blue circle border -->
+  <circle cx="50" cy="50" r="46" fill="white" stroke="#2563eb" stroke-width="4"/>
+
+  <!-- Spoke lines from center to nodes -->
+  <line x1="50" y1="50" x2="50" y2="13"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="75" y2="23"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="87" y2="50"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="75" y2="77"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="50" y2="87"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="25" y2="77"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="13" y2="50"  stroke="#444" stroke-width="1.2"/>
+  <line x1="50" y1="50" x2="25" y2="23"  stroke="#444" stroke-width="1.2"/>
+
+  <!-- Outer nodes -->
+  <circle cx="50" cy="13"  r="3" fill="#333"/>
+  <circle cx="75" cy="23"  r="3" fill="#333"/>
+  <circle cx="87" cy="50"  r="3" fill="#333"/>
+  <circle cx="75" cy="77"  r="3" fill="#333"/>
+  <circle cx="50" cy="87"  r="3" fill="#333"/>
+  <circle cx="25" cy="77"  r="3" fill="#333"/>
+  <circle cx="13" cy="50"  r="3" fill="#333"/>
+  <circle cx="25" cy="23"  r="3" fill="#333"/>
+
+  <!-- Red location pin -->
+  <path d="M50 21 C39 21 30 30 30 41 C30 54 50 68 50 68 C50 68 70 54 70 41 C70 30 61 21 50 21 Z" fill="#e53935"/>
+  <!-- Inner white hole -->
+  <circle cx="50" cy="41" r="9.5" fill="white"/>
+</svg>
