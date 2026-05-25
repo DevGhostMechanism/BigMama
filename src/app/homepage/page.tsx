@@ -722,7 +722,7 @@ export default function Homepage() {
               borderRadius: "4px",
             }}
           >
-            <h3 className="font-bold text-base mb-1">ATTENTION‼</h3>
+            <h3 className="font-bold text-base mb-1">ATTENTION!!!</h3>
             <p className="text-blue-100 text-sm leading-relaxed">
               Dear user, your account is currrently inactive. Please{" "}
               <a
