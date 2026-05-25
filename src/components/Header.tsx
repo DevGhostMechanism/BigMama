@@ -71,7 +71,18 @@ function Header() {
 
   return (
     <>
-      <header style={{}}>
+      <header
+        style={{
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: "54px",
+          padding: "0 16px",
+          backgroundColor: "#fff",
+          borderBottom: "1px solid #e5e7eb",
+        }}
+      >
         {/* LEFT: hamburger (mobile) | logo (desktop) */}
         <div style={{ display: "flex", alignItems: "center" }}>
           <button
