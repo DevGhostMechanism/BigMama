@@ -64,8 +64,7 @@ const items = [
 export default function RotatingProxies() {
   return (
     <section style={{ padding: "80px 0" }}>
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
-        {/* Outlined overlay box */}
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         <div
           style={{
             border: "1px solid #dfdfdf",
@@ -75,26 +74,24 @@ export default function RotatingProxies() {
             margin: "0 auto",
           }}
         >
-          {/* Title */}
           <h2
             className="text-center font-bold text-[#0f0720]"
             style={{
-              fontSize: "48px",
+              fontSize: "clamp(28px, 4vw, 48px)",
               paddingBottom: "40px",
               borderBottom: "2px solid #efefef",
-              margin: "0 40px 0",
+              margin: "0 20px 0",
             }}
           >
             Rotating Proxies
           </h2>
 
-          {/* Items */}
-          <div className="flex flex-wrap" style={{ padding: "0 100px" }}>
+          <div className="flex flex-wrap" style={{ padding: "0 20px" }}>
             {items.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col items-start gap-3"
-                style={{ width: "360px", margin: "40px 10px 0" }}
+                className="w-full sm:w-1/2 lg:w-1/3 flex flex-col items-start gap-3"
+                style={{ padding: "40px 20px 0" }}
               >
                 <Image
                   src={item.icon}
@@ -104,7 +101,7 @@ export default function RotatingProxies() {
                   className="object-contain shrink-0"
                   style={{ width: "33px", height: "33px" }}
                 />
-                <p className="text-[#0f0720]" style={{ fontSize: "20px" }}>
+                <p className="text-[#0f0720]" style={{ fontSize: "clamp(15px, 2vw, 20px)" }}>
                   {item.text}
                 </p>
               </div>

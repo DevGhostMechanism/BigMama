@@ -3,13 +3,13 @@ import Link from "next/link";
 export default function WorldProxies() {
   return (
     <section className="w-full bg-[#fcfcfc]" style={{ padding: "80px 0" }}>
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
-        <div className="flex items-center">
-          {/* Left — illustration as background */}
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
+        <div className="flex flex-col md:flex-row items-center">
+          {/* Illustration */}
           <div
+            className="w-full md:w-1/2"
             style={{
-              width: "50%",
-              height: "500px",
+              height: "300px",
               backgroundImage: "url(/images/bg-illustration_woman.svg)",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center top",
@@ -17,14 +17,19 @@ export default function WorldProxies() {
             }}
           />
 
-          {/* Right — content */}
+          {/* Content */}
           <div
-            className="flex flex-col justify-center items-start"
-            style={{ width: "50%", paddingLeft: "130px" }}
+            className="flex flex-col justify-center items-start w-full md:w-1/2"
+            style={{ paddingLeft: "0", paddingTop: "32px" }}
           >
             <h2
               className="font-bold text-[#0f0720]"
-              style={{ fontFamily: "Poppins, sans-serif", fontSize: "2.6em", lineHeight: 1.5, marginBottom: "0" }}
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: "clamp(28px, 4vw, 42px)",
+                lineHeight: 1.5,
+                marginBottom: "0",
+              }}
             >
               Proxies from whole world
             </h2>
@@ -40,13 +45,13 @@ export default function WorldProxies() {
               style={{
                 background: "linear-gradient(280deg, #4c97ff 107%, #7eb4ff 0)",
                 boxShadow: "-3px 3px 30px 0 rgba(76,151,255,0.3)",
-                minWidth: "260px",
-                height: "60px",
+                minWidth: "220px",
+                height: "56px",
                 borderRadius: "30px",
                 fontSize: "0.9em",
                 fontWeight: 600,
                 padding: "10px",
-                marginTop: "40px",
+                marginTop: "32px",
               }}
             >
               Get started

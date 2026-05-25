@@ -84,7 +84,7 @@ export default function FAQPage() {
       <div
         style={{
           flex: 1,
-          padding: "40px 24px",
+          padding: "24px 16px",
           display: "flex",
           justifyContent: "center",
         }}

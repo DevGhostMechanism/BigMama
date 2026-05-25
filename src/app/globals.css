@@ -73,6 +73,26 @@ h2 {
   h1 { font-size: 70px; line-height: 88px; }
 }
 
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+.desktop-only {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block !important;
+  }
+}
+
 a {
   text-decoration: none;
 }
@@ -80,6 +100,7 @@ a {
 img {
   border: 0;
   max-width: 100%;
+  height: auto;
 }
 
 ul {

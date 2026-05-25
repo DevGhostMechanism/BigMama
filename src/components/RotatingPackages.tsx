@@ -60,13 +60,13 @@ const trafficPlans: PeriodBlock[] = [
 function PackageCard({ icon, title, plans }: { icon: string; title: string; plans: PeriodBlock[] }) {
   return (
     <div
-      className="flex flex-col bg-white"
-      style={{ flex: 1, border: "1px solid #dfdfdf", borderRadius: "8px" }}
+      className="flex flex-col bg-white w-full"
+      style={{ border: "1px solid #dfdfdf", borderRadius: "8px" }}
     >
       {/* Header */}
       <div
         className="flex items-center"
-        style={{ padding: "15px 35px", borderBottom: "1px solid #dfdfdf", fontSize: "18px" }}
+        style={{ padding: "15px 20px", borderBottom: "1px solid #dfdfdf", fontSize: "18px" }}
       >
         <Image src={icon} alt={title} width={40} height={40} className="object-contain shrink-0" style={{ marginRight: "10px" }} />
         <span className="font-semibold text-[#0f0720]">{title}</span>
@@ -76,13 +76,13 @@ function PackageCard({ icon, title, plans }: { icon: string; title: string; plan
       {plans.map((plan, i) => (
         <div
           key={i}
-          className="flex items-start justify-between"
-          style={{ margin: "0 35px", padding: "12px 0", borderBottom: "1px solid #dfdfdf" }}
+          className="flex flex-col sm:flex-row items-start justify-between"
+          style={{ margin: "0 20px", padding: "12px 0", borderBottom: "1px solid #dfdfdf" }}
         >
           {/* Period label */}
           <h3
             className="text-[#0f0720] font-medium shrink-0"
-            style={{ fontSize: "18px", paddingTop: "12px", paddingBottom: "15px", textAlign: "left", width: "130px" }}
+            style={{ fontSize: "16px", paddingTop: "8px", paddingBottom: "8px", textAlign: "left", minWidth: "100px" }}
           >
             {plan.period}
           </h3>
@@ -90,10 +90,10 @@ function PackageCard({ icon, title, plans }: { icon: string; title: string; plan
           {/* Rows */}
           <div className="flex flex-col flex-1">
             {plan.rows.map((row, j) => (
-              <div key={j} className="flex items-center" style={{ padding: "12px 0" }}>
+              <div key={j} className="flex items-center flex-wrap" style={{ padding: "8px 0" }}>
                 <span
                   className="font-semibold text-[#0f0720] shrink-0"
-                  style={{ fontSize: "24px", width: "90px" }}
+                  style={{ fontSize: "clamp(16px, 2vw, 24px)", minWidth: "80px" }}
                 >
                   {row.price}
                 </span>
@@ -118,17 +118,17 @@ function PackageCard({ icon, title, plans }: { icon: string; title: string; plan
 export default function RotatingPackages() {
   return (
     <section className="bg-white" style={{ padding: "80px 0" }}>
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         <h2
           className="text-center font-bold text-[#0f0720]"
-          style={{ marginBottom: "20px", fontSize: "48px" }}
+          style={{ marginBottom: "20px", fontSize: "clamp(28px, 4vw, 48px)" }}
         >
           Rotating Packages
         </h2>
 
         <div
           className="flex flex-col md:flex-row items-stretch justify-between"
-          style={{ maxWidth: "1160px", margin: "15px auto 0", gap: "30px" }}
+          style={{ maxWidth: "1160px", margin: "15px auto 0", gap: "24px" }}
         >
           <PackageCard icon="/images/Unlimited 1 port.svg" title="Unlimited 1 port" plans={unlimitedPlans} />
           <PackageCard icon="/images/By Traffic .svg"      title="By Traffic 1 port" plans={trafficPlans} />

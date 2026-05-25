@@ -14,6 +14,64 @@ function AuthForm() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  function switchTab(next: "login" | "signup") {
+    setTab(next);
+    setError("");
+    setSuccessMsg("");
+  }
+
+  async function handleSubmit() {
+    setError("");
+    setSuccessMsg("");
+    setLoading(true);
+    try {
+      if (tab === "signup") {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const msg =
+            typeof data.error === "string"
+              ? data.error
+              : data.error?.email?.[0] ?? data.error?.password?.[0] ?? "Registration failed";
+          setError(msg);
+          return;
+        }
+        setPassword("");
+        setAgreeTerms(false);
+        setSuccessMsg("Account created! Please log in to confirm.");
+        setTab("login");
+      } else {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const msg =
+            typeof data.error === "string" ? data.error : "Invalid credentials";
+          setError(msg);
+          return;
+        }
+        router.push("/homepage");
+      }
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const disabled =
+    !email || !password || (tab === "signup" && !agreeTerms) || loading;
 
   return (
     <div
@@ -21,8 +79,8 @@ function AuthForm() {
       style={{ backgroundColor: "#c8c8c8" }}
     >
       <div
-        className="rounded-2xl overflow-hidden shadow-2xl"
-        style={{ width: "420px" }}
+        className="rounded-2xl overflow-hidden shadow-2xl w-full mx-4"
+        style={{ maxWidth: "420px" }}
       >
         {/* Header */}
         <div
@@ -58,7 +116,7 @@ function AuthForm() {
         {/* Tabs */}
         <div className="flex" style={{ backgroundColor: "#ffffff" }}>
           <button
-            onClick={() => setTab("login")}
+            onClick={() => switchTab("login")}
             style={{
               flex: 1,
               paddingTop: "18px",
@@ -76,7 +134,7 @@ function AuthForm() {
             Log in
           </button>
           <button
-            onClick={() => setTab("signup")}
+            onClick={() => switchTab("signup")}
             style={{
               flex: 1,
               paddingTop: "18px",
@@ -129,6 +187,7 @@ function AuthForm() {
               placeholder="your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && !disabled && handleSubmit()}
               style={{
                 width: "100%",
                 border: "1px solid #d1d5db",
@@ -269,36 +328,59 @@ function AuthForm() {
               </div>
             </>
           )}
+
+          {/* Feedback messages */}
+          {error && (
+            <p
+              style={{
+                marginTop: "12px",
+                fontSize: "13px",
+                color: "#dc2626",
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </p>
+          )}
+          {successMsg && (
+            <p
+              style={{
+                marginTop: "12px",
+                fontSize: "13px",
+                color: "#16a34a",
+                textAlign: "center",
+              }}
+            >
+              {successMsg}
+            </p>
+          )}
         </div>
 
         {/* Action Button */}
         <button
           type="button"
-          onClick={() => tab === "login" && router.push("/homepage")}
-          disabled={!email || !password || (tab === "signup" && !agreeTerms)}
+          onClick={handleSubmit}
+          disabled={disabled}
           style={{
             width: "100%",
             padding: "26px 0",
-            backgroundColor:
-              !email || !password || (tab === "signup" && !agreeTerms)
-                ? "#93c5fd"
-                : "#3b82f6",
-            color:
-              !email || !password || (tab === "signup" && !agreeTerms)
-                ? "rgba(255,255,255,0.6)"
-                : "#ffffff",
+            backgroundColor: disabled ? "#93c5fd" : "#3b82f6",
+            color: disabled ? "rgba(255,255,255,0.6)" : "#ffffff",
             fontSize: "13px",
             fontWeight: 700,
             letterSpacing: "0.15em",
             border: "none",
-            cursor:
-              !email || !password || (tab === "signup" && !agreeTerms)
-                ? "not-allowed"
-                : "pointer",
+            cursor: disabled ? "not-allowed" : "pointer",
             transition: "background-color 0.15s",
           }}
         >
-          {tab === "login" ? "LOG IN" : "SIGN UP"}
+          {loading
+            ? tab === "login"
+              ? "LOGGING IN…"
+              : "SIGNING UP…"
+            : tab === "login"
+              ? "LOG IN"
+              : "SIGN UP"}
         </button>
       </div>
     </div>

@@ -1,163 +1,186 @@
 "use client";
 
 import Header from "@/components/Header";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ProxyRow {
   id: number;
   ip: string;
   region: string;
+  stateName: string;
   city: string;
   zip: string;
   isp: string;
   cleanLevel: number;
   cleanColor: "green" | "yellow";
   shared: string;
-  conn: string;
+  conn: "wifi" | "cell";
   isNew: boolean;
   price: number;
+  privatePrice: number;
 }
 
 const proxyRows: ProxyRow[] = [
   {
     id: 1,
-    ip: "38.108._._ ",
+    ip: "38.108._._",
     region: "NY",
+    stateName: "New York",
     city: "The Bronx",
     zip: "10452",
     isp: "ANDRENA",
     cleanLevel: 3,
     cleanColor: "yellow",
     shared: "Private",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: true,
     price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 2,
-    ip: "71.191._._ ",
+    ip: "71.191._._",
     region: "DC",
+    stateName: "DC",
     city: "Washington",
     zip: "20001",
     isp: "Verizon Fios",
     cleanLevel: 4,
     cleanColor: "green",
     shared: "2 of 4",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: false,
-    price: 0.7,
+    price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 3,
-    ip: "72.23._._ ",
+    ip: "72.23._._",
     region: "PA",
+    stateName: "Pennsylvania",
     city: "Waterford",
     zip: "16441",
     isp: "Armstrong Cable",
-    cleanLevel: 3,
+    cleanLevel: 4,
     cleanColor: "yellow",
     shared: "2 of 4",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: false,
     price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 4,
-    ip: "216.223._._ ",
+    ip: "216.223._._",
     region: "SC",
+    stateName: "South Carolina",
     city: "Myrtle Beach",
     zip: "29579",
-    isp: "Horry Telephone Co...",
+    isp: "Horry Telephone",
     cleanLevel: 2,
     cleanColor: "yellow",
     shared: "2 of 4",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: false,
     price: 0.61,
+    privatePrice: 1.62,
   },
   {
     id: 5,
-    ip: "67.21._._ ",
+    ip: "67.21._._",
     region: "SC",
+    stateName: "South Carolina",
     city: "Clemson",
     zip: "29631",
     isp: "Northland Cable",
-    cleanLevel: 2,
+    cleanLevel: 3,
     cleanColor: "yellow",
-    shared: "1 of 4",
-    conn: "Wifi",
+    shared: "Private",
+    conn: "wifi",
     isNew: false,
     price: 0.61,
+    privatePrice: 1.62,
   },
   {
     id: 6,
-    ip: "153.66._._ ",
+    ip: "153.66._._",
     region: "GA",
+    stateName: "Georgia",
     city: "Atlanta",
     zip: "30308",
     isp: "NCR",
     cleanLevel: 4,
     cleanColor: "green",
     shared: "Private",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: true,
-    price: 0.7,
+    price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 7,
-    ip: "98.44._._ ",
+    ip: "98.44._._",
     region: "TX",
+    stateName: "Texas",
     city: "Sugar Land",
     zip: "77479",
     isp: "Comcast Cable",
     cleanLevel: 4,
     cleanColor: "green",
     shared: "Private",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: true,
-    price: 0.7,
+    price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 8,
-    ip: "64.38._._ ",
+    ip: "64.38._._",
     region: "FL",
+    stateName: "Florida",
     city: "Boca Raton",
     zip: "33431",
     isp: "Broadbandone LLC",
     cleanLevel: 4,
     cleanColor: "green",
     shared: "Private",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: true,
-    price: 0.7,
+    price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 9,
-    ip: "35.139._._ ",
+    ip: "35.139._._",
     region: "FL",
+    stateName: "Florida",
     city: "Lakeland",
     zip: "33815",
     isp: "Spectrum",
     cleanLevel: 4,
     cleanColor: "green",
     shared: "Private",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: true,
-    price: 0.7,
+    price: 0.66,
+    privatePrice: 1.77,
   },
   {
     id: 10,
-    ip: "174.110._._ ",
+    ip: "174.110._._",
     region: "NC",
+    stateName: "North Carolina",
     city: "Wilmington",
     zip: "28403",
     isp: "Spectrum",
     cleanLevel: 2,
     cleanColor: "yellow",
     shared: "3 of 4",
-    conn: "Wifi",
+    conn: "wifi",
     isNew: false,
     price: 0.61,
+    privatePrice: 1.62,
   },
 ];
 
@@ -170,6 +193,40 @@ const countries = [
   { code: "CN", flag: "🇨🇳", name: "China", count: "20" },
 ];
 
+/* ── Shared helpers ── */
+
+function formatIP(ip: string) {
+  return ip.trim().replace(/_/g, "*");
+}
+
+/* Round signal dots — used on mobile */
+function SignalDots({
+  level,
+  color,
+}: {
+  level: number;
+  color: "green" | "yellow";
+}) {
+  const activeColor = color === "green" ? "#22c55e" : "#eab308";
+  return (
+    <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+      {[1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          style={{
+            width: "9px",
+            height: "9px",
+            borderRadius: "50%",
+            backgroundColor: i <= level ? activeColor : "#d1d5db",
+            flexShrink: 0,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* Square signal bars — used on desktop */
 function SignalBars({
   level,
   color,
@@ -192,6 +249,64 @@ function SignalBars({
         />
       ))}
     </div>
+  );
+}
+
+function WifiIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#9ca3af"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ flexShrink: 0 }}
+    >
+      <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+      <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <circle cx="12" cy="20" r="1" fill="#9ca3af" stroke="none" />
+    </svg>
+  );
+}
+
+function CellIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#9ca3af"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ flexShrink: 0 }}
+    >
+      <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+      <line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="3" />
+    </svg>
+  );
+}
+
+function FilterIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    >
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="6" y1="12" x2="18" y2="12" />
+      <line x1="9" y1="18" x2="15" y2="18" />
+    </svg>
   );
 }
 
@@ -244,6 +359,12 @@ export default function Homepage() {
   const [activePurchase, setActivePurchase] = useState<"Private" | "Shared">(
     "Private",
   );
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
+  const [countryDropOpen, setCountryDropOpen] = useState(false);
+
+  const activeCountryData = countries.find((c) => c.code === activeCountry)!;
+
+  const router = useRouter();
 
   return (
     <div
@@ -255,17 +376,269 @@ export default function Homepage() {
         flexDirection: "column",
       }}
     >
-      {/* ── Top Navigation ── */}
       <Header />
 
-      {/* ── Body ── */}
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        {/* ── Left: Proxies ── */}
+      {/* ══════════════════════════════════
+          MOBILE BODY  (hidden on md+)
+      ══════════════════════════════════ */}
+      <div
+        className="md:hidden"
+        style={{ flex: 1, backgroundColor: "#f3f4f6", overflowY: "auto" }}
+      >
+        <div style={{ padding: "12px" }}>
+          {/* Country dropdown */}
+          <div style={{ position: "relative", marginBottom: "12px" }}>
+            <div
+              onClick={() => setCountryDropOpen((o) => !o)}
+              style={{
+                backgroundColor: "#fff",
+                borderRadius: "10px",
+                padding: "13px 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                cursor: "pointer",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.07)",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <span style={{ fontSize: "20px" }}>
+                  {activeCountryData.flag}
+                </span>
+                <span
+                  style={{
+                    fontSize: "15px",
+                    fontWeight: 500,
+                    color: "#111827",
+                  }}
+                >
+                  {activeCountryData.name}
+                </span>
+              </div>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#9ca3af"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{
+                  transform: countryDropOpen
+                    ? "rotate(180deg)"
+                    : "rotate(0deg)",
+                  transition: "transform 0.15s",
+                }}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+
+            {countryDropOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 4px)",
+                  left: 0,
+                  right: 0,
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+                  zIndex: 20,
+                  overflow: "hidden",
+                }}
+              >
+                {countries.map((c) => (
+                  <button
+                    key={c.code}
+                    onClick={() => {
+                      setActiveCountry(c.code);
+                      setCountryDropOpen(false);
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      width: "100%",
+                      padding: "12px 16px",
+                      fontSize: "14px",
+                      color: "#111827",
+                      background: c.code === activeCountry ? "#eff6ff" : "none",
+                      border: "none",
+                      borderBottom: "1px solid #f3f4f6",
+                      cursor: "pointer",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span style={{ fontSize: "18px" }}>{c.flag}</span>
+                    <span style={{ flex: 1 }}>{c.name}</span>
+                    <span style={{ fontSize: "12px", color: "#9ca3af" }}>
+                      {c.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Proxy cards */}
+          {proxyRows.map((row) => {
+            const topPrice =
+              row.shared === "Private"
+                ? `$${row.privatePrice.toFixed(2)}`
+                : `$${row.price.toFixed(2)}`;
+            const bottomRight =
+              row.shared === "Private"
+                ? `$${row.price.toFixed(2)}`
+                : row.shared;
+
+            return (
+              <div
+                key={row.id}
+                onClick={() => {
+                  setSelectedRow(row);
+                  setMobileDetailOpen(true);
+                }}
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "10px",
+                  padding: "14px 16px",
+                  marginBottom: "8px",
+                  cursor: "pointer",
+                  boxShadow: "0 1px 2px rgba(0,0,0,0.06)",
+                }}
+              >
+                {/* Line 1: IP + main price */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "3px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      fontSize: "15px",
+                      color: "#111827",
+                    }}
+                  >
+                    {formatIP(row.ip)}
+                  </span>
+                  <span
+                    style={{
+                      fontWeight: 700,
+                      fontSize: "15px",
+                      color: "#111827",
+                    }}
+                  >
+                    {topPrice}
+                  </span>
+                </div>
+
+                {/* Line 2: location + secondary info */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "7px",
+                  }}
+                >
+                  <span style={{ fontSize: "13px", color: "#6b7280" }}>
+                    {row.city}, {row.stateName} {row.zip}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#6b7280" }}>
+                    {bottomRight}
+                  </span>
+                </div>
+
+                {/* Line 3: ISP icon + name + signal dots */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      minWidth: 0,
+                    }}
+                  >
+                    {row.conn === "cell" ? <CellIcon /> : <WifiIcon />}
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        color: "#6b7280",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {row.isp}
+                    </span>
+                  </div>
+                  <SignalDots level={row.cleanLevel} color={row.cleanColor} />
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Show more */}
+          <div style={{ textAlign: "center", padding: "16px 0 6px" }}>
+            <button
+              style={{
+                color: "#3b82f6",
+                fontSize: "15px",
+                fontWeight: 500,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Show more
+            </button>
+          </div>
+
+          {/* Filter */}
+          <div style={{ textAlign: "center", padding: "6px 0 28px" }}>
+            <button
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                color: "#3b82f6",
+                fontSize: "15px",
+                fontWeight: 500,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              <FilterIcon />
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════
+          DESKTOP BODY  (hidden on mobile)
+      ══════════════════════════════════ */}
+      <div className="hidden md:flex" style={{ flex: 1, overflow: "hidden" }}>
+        {/* Left: Proxies */}
         <div
           style={{
             flex: 1,
             overflow: "auto",
-            padding: "24px 24px 16px 24px",
+            padding: "16px 12px 16px 12px",
             minWidth: 0,
           }}
         >
@@ -337,6 +710,41 @@ export default function Homepage() {
             </button>
           </div>
 
+          <div
+            style={{
+              width: "100%",
+              backgroundColor: "#ef4444",
+              color: "#fff",
+              fontSize: "13px",
+              fontWeight: 500,
+              padding: "6px 12px",
+              marginBottom: "15px",
+              borderRadius: "4px",
+            }}
+          >
+            <h3 className="font-bold text-base mb-1">ATTENTION‼</h3>
+            <p className="text-blue-100 text-sm leading-relaxed">
+              Dear user, your account is currrently inactive. Please{" "}
+              <a
+                href="/add-funds"
+                className="text-blue-500 hover:text-blue-200 underline"
+              >
+                top up
+              </a>{" "}
+              your account to activate it.
+            </p>
+            {/* <button
+              className="mt-4 bg-blue-400 text-yellow-900 font-semibold px-4 py-1.5 rounded text-sm hover:bg-blue-300 transition-colors inline-flex items-center gap-1"
+              onClick={() => router.push("/add-funds")}
+            > */}
+            <button
+              className="text-blue-700 hover:text-blue-300 underline"
+              onClick={() => router.push("/add-funds")}
+            >
+              Add funds
+            </button>
+          </div>
+
           {/* Table */}
           <div
             style={{
@@ -353,7 +761,6 @@ export default function Homepage() {
               }}
             >
               <thead>
-                {/* Column headers */}
                 <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
                   {[
                     "IP",
@@ -408,7 +815,6 @@ export default function Homepage() {
                     ) : null}
                   </th>
                 </tr>
-                {/* Filter row */}
                 <tr
                   style={{
                     borderBottom: "1px solid #e5e7eb",
@@ -475,6 +881,7 @@ export default function Homepage() {
                       onClick={() => {
                         setSelectedRow(row);
                         setPanelOpen(true);
+                        setMobileDetailOpen(true);
                       }}
                       style={{
                         backgroundColor: isSelected ? "#eff6ff" : "#fff",
@@ -490,7 +897,7 @@ export default function Homepage() {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {row.ip}
+                        {formatIP(row.ip)}
                       </td>
                       <td style={{ padding: "9px 12px", color: "#374151" }}>
                         {row.region}
@@ -626,7 +1033,7 @@ export default function Homepage() {
           </div>
         </div>
 
-        {/* ── Right: Detail Panel ── */}
+        {/* Right: Detail Panel */}
         {panelOpen && selectedRow && (
           <div
             style={{
@@ -641,7 +1048,6 @@ export default function Homepage() {
               gap: "0",
             }}
           >
-            {/* IP display */}
             <div
               style={{
                 fontSize: "17px",
@@ -651,7 +1057,7 @@ export default function Homepage() {
                 letterSpacing: "0.01em",
               }}
             >
-              {selectedRow.ip}
+              {formatIP(selectedRow.ip)}
             </div>
             <div
               style={{
@@ -660,10 +1066,9 @@ export default function Homepage() {
                 marginBottom: "14px",
               }}
             >
-              {selectedRow.ip}
+              {formatIP(selectedRow.ip)}
             </div>
 
-            {/* Location */}
             <div style={{ marginBottom: "14px" }}>
               <div
                 style={{
@@ -692,7 +1097,7 @@ export default function Homepage() {
                   lineHeight: "1.7",
                 }}
               >
-                {selectedRow.region === "NY" ? "New York" : selectedRow.city}
+                {selectedRow.stateName}
               </div>
               <div
                 style={{
@@ -710,7 +1115,6 @@ export default function Homepage() {
               style={{ borderTop: "1px solid #e5e7eb", marginBottom: "12px" }}
             />
 
-            {/* Uptime / Activity */}
             <div
               style={{
                 display: "flex",
@@ -740,7 +1144,6 @@ export default function Homepage() {
               <span style={{ color: "#111827", fontWeight: 500 }}>100%</span>
             </div>
 
-            {/* Tabs */}
             <div
               style={{
                 display: "flex",
@@ -776,7 +1179,6 @@ export default function Homepage() {
               })}
             </div>
 
-            {/* Tab content */}
             {activeTab === "Blacklists" && (
               <div style={{ marginBottom: "20px" }}>
                 <div
@@ -829,10 +1231,8 @@ export default function Homepage() {
               </div>
             )}
 
-            {/* Spacer pushes buttons to bottom */}
             <div style={{ flex: 1 }} />
 
-            {/* Private / Shared buttons */}
             <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
               <button
                 onClick={() => setActivePurchase("Private")}
@@ -851,7 +1251,7 @@ export default function Homepage() {
                   cursor: "pointer",
                 }}
               >
-                Private $1.77
+                Private ${selectedRow.privatePrice.toFixed(2)}
               </button>
               <button
                 onClick={() => setActivePurchase("Shared")}
@@ -870,12 +1270,12 @@ export default function Homepage() {
                   cursor: "pointer",
                 }}
               >
-                Shared $0.66
+                Shared ${selectedRow.price.toFixed(2)}
               </button>
             </div>
 
-            {/* Buy button */}
             <button
+              onClick={() => alert("Inactive account. Please activate it.")}
               style={{
                 width: "100%",
                 padding: "13px",
@@ -894,6 +1294,152 @@ export default function Homepage() {
           </div>
         )}
       </div>
+
+      {/* ══════════════════════════════════
+          MOBILE: detail bottom sheet
+      ══════════════════════════════════ */}
+      {mobileDetailOpen && selectedRow && (
+        <div
+          className="md:hidden"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 50,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundColor: "rgba(0,0,0,0.4)",
+            }}
+            onClick={() => setMobileDetailOpen(false)}
+          />
+          <div
+            style={{
+              position: "relative",
+              backgroundColor: "#fff",
+              borderRadius: "16px 16px 0 0",
+              padding: "20px 18px 32px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0",
+            }}
+          >
+            <button
+              onClick={() => setMobileDetailOpen(false)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "none",
+                border: "none",
+                fontSize: "20px",
+                cursor: "pointer",
+                color: "#6b7280",
+              }}
+            >
+              ✕
+            </button>
+
+            <div
+              style={{
+                fontSize: "17px",
+                fontWeight: 700,
+                color: "#111827",
+                marginBottom: "2px",
+              }}
+            >
+              {formatIP(selectedRow.ip)}
+            </div>
+            <div
+              style={{
+                fontSize: "14px",
+                color: "#374151",
+                marginBottom: "6px",
+              }}
+            >
+              {selectedRow.city}, {selectedRow.stateName} {selectedRow.zip}
+            </div>
+            <div
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginBottom: "14px",
+              }}
+            >
+              {selectedRow.isp}
+            </div>
+
+            <div
+              style={{ borderTop: "1px solid #e5e7eb", marginBottom: "12px" }}
+            />
+
+            <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+              <button
+                onClick={() => setActivePurchase("Private")}
+                style={{
+                  flex: 1,
+                  padding: "9px 4px",
+                  borderRadius: "8px",
+                  border: "1.5px solid",
+                  borderColor:
+                    activePurchase === "Private" ? "#3b82f6" : "#e5e7eb",
+                  backgroundColor:
+                    activePurchase === "Private" ? "#3b82f6" : "#fff",
+                  color: activePurchase === "Private" ? "#fff" : "#374151",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                }}
+              >
+                Private ${selectedRow.privatePrice.toFixed(2)}
+              </button>
+              <button
+                onClick={() => setActivePurchase("Shared")}
+                style={{
+                  flex: 1,
+                  padding: "9px 4px",
+                  borderRadius: "8px",
+                  border: "1.5px solid",
+                  borderColor:
+                    activePurchase === "Shared" ? "#3b82f6" : "#e5e7eb",
+                  backgroundColor:
+                    activePurchase === "Shared" ? "#3b82f6" : "#fff",
+                  color: activePurchase === "Shared" ? "#fff" : "#374151",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  cursor: "pointer",
+                }}
+              >
+                Shared ${selectedRow.price.toFixed(2)}
+              </button>
+            </div>
+
+            <button
+              style={{
+                width: "100%",
+                padding: "13px",
+                borderRadius: "8px",
+                border: "none",
+                backgroundColor: "#3b82f6",
+                color: "#fff",
+                fontSize: "13px",
+                fontWeight: 700,
+                cursor: "pointer",
+                letterSpacing: "0.04em",
+              }}
+            >
+              BUY {activePurchase === "Private" ? "PRIVATE" : "SHARED"} PROXY
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

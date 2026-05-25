@@ -68,6 +68,10 @@ function Code({ children }: { children: React.ReactNode }) {
         whiteSpace: "pre-wrap",
         wordBreak: "break-all",
         lineHeight: "1.6",
+        overflowX: "auto",
+        backgroundColor: "#f9fafb",
+        padding: "8px",
+        borderRadius: "4px",
       }}
     >
       {children}
@@ -97,7 +101,7 @@ export default function ApiPage() {
         style={{
           maxWidth: "860px",
           margin: "0 auto",
-          padding: "40px 24px",
+          padding: "24px 16px",
           width: "100%",
         }}
       >

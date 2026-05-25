@@ -4,6 +4,8 @@ import sql from '@/app/lib/db'
 import { createSession } from '@/app/lib/session'
 import { RegisterSchema } from '@/app/lib/definitions'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   let body: unknown
   try {

@@ -17,7 +17,7 @@ export default function ReferralPage() {
     >
       <Header />
 
-      <div style={{ padding: "48px 28px" }}>
+      <div style={{ padding: "32px 16px" }}>
         <h1
           style={{
             textAlign: "center",
@@ -30,7 +30,7 @@ export default function ReferralPage() {
           BigMama Referral Program
         </h1>
 
-        <div style={{ maxWidth: "720px", color: "#4b5563" }}>
+        <div style={{ maxWidth: "720px", color: "#4b5563", wordBreak: "break-word" }}>
           <p style={{ fontWeight: 600, fontSize: "15px", marginBottom: "14px", color: "#374151" }}>
             How to start earn with BigMama?
           </p>

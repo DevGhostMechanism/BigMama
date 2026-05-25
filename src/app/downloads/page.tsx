@@ -104,7 +104,7 @@ export default function DownloadsPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "48px 24px",
+          padding: "32px 16px",
         }}
       >
         <h1
@@ -189,7 +189,7 @@ export default function DownloadsPage() {
           </button>
 
           {/* Android + Chrome row */}
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
             {/* Android */}
             <button
               style={{

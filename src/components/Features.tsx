@@ -20,26 +20,22 @@ export default function Features() {
       id="features-section"
       style={{ padding: "80px 0" }}
     >
-      {/* Title */}
-      <div
-        style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px 0" }}
-      >
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px 0" }}>
         <h2
           className="text-center font-bold text-[#0f0720]"
-          style={{ marginBottom: "50px", fontSize: "40px" }}
+          style={{ marginBottom: "50px", fontSize: "clamp(26px, 4vw, 40px)" }}
         >
           Private LTE/4G Mobile and WiFi Proxies
         </h2>
       </div>
 
-      {/* Features grid — no horizontal padding on container to let items span wide */}
-      <div style={{ maxWidth: "1550px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1550px", margin: "0 auto", padding: "0 20px" }}>
         <ul className="flex flex-wrap" style={{ justifyContent: "flex-start" }}>
           {features.map((feature, index) => (
             <li
               key={index}
-              style={{ width: "20%", padding: "0 35px 70px 35px" }}
-              className="flex flex-col items-start justify-start"
+              className="w-1/2 sm:w-1/3 lg:w-1/5 flex flex-col items-start justify-start"
+              style={{ padding: "0 24px 50px 24px" }}
             >
               <div className="mb-6" style={{ maxWidth: "90px" }}>
                 <Image
@@ -52,7 +48,7 @@ export default function Features() {
               </div>
               <p
                 className="text-[#0f0720] font-normal text-left"
-                style={{ fontSize: "18px", lineHeight: "24px" }}
+                style={{ fontSize: "clamp(14px, 1.5vw, 18px)", lineHeight: "24px" }}
               >
                 {feature.label}
               </p>
@@ -61,11 +57,10 @@ export default function Features() {
         </ul>
       </div>
 
-      {/* Bottom note */}
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         <p
           className="text-center text-[#0f0720] mx-auto"
-          style={{ opacity: 0.5, fontSize: "18px" }}
+          style={{ opacity: 0.5, fontSize: "clamp(14px, 1.5vw, 18px)" }}
         >
           Our proxy network is exclusive, operated and managed by ourselves,
           end-to-end. Best selection, top freshness, highest uptime and speed

@@ -7,85 +7,42 @@ export default function Footer() {
       id="contacts"
       style={{ backgroundColor: "#0f0720" }}
     >
-      {/* Main footer */}
-      <div
-        style={{ maxWidth: "1650px", margin: "0 auto", padding: "40px 40px" }}
-      >
-        <div
-          className="flex flex-col md:flex-row items-center justify-between"
-          style={{ gap: "30px" }}
-        >
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "40px 20px" }}>
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
           {/* Logo + legal links */}
-          <div
-            className="flex flex-col items-center justify-center"
-            style={{ flex: "230px 0" }}
-          >
+          <div className="flex flex-col items-center md:items-start justify-center">
             <span className="font-bold text-white" style={{ fontSize: "24px" }}>
               BigMama Network
             </span>
-            <div
-              className="flex items-center justify-center"
-              style={{ marginTop: "8px" }}
-            >
-              <ul className="flex items-center">
-                <li
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "20px",
-                  }}
-                >
-                  <Link
-                    href="/terms_conditions.html"
-                    className="hover:underline text-white"
-                    style={{ fontSize: "14px" }}
-                  >
-                    Terms of use
-                  </Link>
-                </li>
-                <li
-                  style={{
-                    borderLeft: "1px solid #fff",
-                    marginLeft: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    height: "20px",
-                  }}
-                >
-                  <Link
-                    href="/privacy.html"
-                    className="hover:underline text-white ml-2"
-                    style={{ fontSize: "14px" }}
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li
-                  style={{
-                    borderLeft: "1px solid #fff",
-                    marginLeft: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    height: "20px",
-                  }}
-                >
-                  <Link
-                    href="/cookies-policy.html"
-                    className="hover:underline text-white ml-2"
-                    style={{ fontSize: "14px" }}
-                  >
-                    Cookies Policy
-                  </Link>
-                </li>
-              </ul>
+            <div className="flex items-center justify-center flex-wrap gap-2 mt-2">
+              <Link
+                href="/terms_conditions.html"
+                className="hover:underline text-white"
+                style={{ fontSize: "14px" }}
+              >
+                Terms of use
+              </Link>
+              <span style={{ borderLeft: "1px solid #fff", height: "14px", display: "inline-block" }} />
+              <Link
+                href="/privacy.html"
+                className="hover:underline text-white"
+                style={{ fontSize: "14px" }}
+              >
+                Privacy Policy
+              </Link>
+              <span style={{ borderLeft: "1px solid #fff", height: "14px", display: "inline-block" }} />
+              <Link
+                href="/cookies-policy.html"
+                className="hover:underline text-white"
+                style={{ fontSize: "14px" }}
+              >
+                Cookies Policy
+              </Link>
             </div>
           </div>
 
           {/* Social / contact items */}
-          <div
-            className="flex items-center justify-between"
-            style={{ flex: 1, padding: "0 150px" }}
-          >
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8 sm:gap-12">
             {/* Email */}
             <div className="flex items-center" style={{ gap: "16px" }}>
               <div
@@ -98,23 +55,12 @@ export default function Footer() {
                 }}
               >
                 <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
-                  <rect
-                    x="1"
-                    y="1"
-                    width="26"
-                    height="20"
-                    rx="3"
-                    stroke="#4c97ff"
-                    strokeWidth="2"
-                  />
+                  <rect x="1" y="1" width="26" height="20" rx="3" stroke="#4c97ff" strokeWidth="2" />
                   <path d="M1 5L14 13L27 5" stroke="#4c97ff" strokeWidth="2" />
                 </svg>
               </div>
               <div className="flex flex-col">
-                <span
-                  className="font-bold text-white"
-                  style={{ fontSize: "24px" }}
-                >
+                <span className="font-bold text-white" style={{ fontSize: "24px" }}>
                   Email
                 </span>
                 <a
@@ -145,19 +91,11 @@ export default function Footer() {
                     strokeWidth="2"
                     strokeLinejoin="round"
                   />
-                  <path
-                    d="M11 14L16 9"
-                    stroke="#4c97ff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
+                  <path d="M11 14L16 9" stroke="#4c97ff" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </div>
               <div className="flex flex-col">
-                <span
-                  className="font-bold text-white"
-                  style={{ fontSize: "24px" }}
-                >
+                <span className="font-bold text-white" style={{ fontSize: "24px" }}>
                   Telegram
                 </span>
                 <a
@@ -173,16 +111,12 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
         <div
           className="text-center"
-          style={{ maxWidth: "1650px", margin: "0 auto", padding: "16px 40px" }}
+          style={{ maxWidth: "1650px", margin: "0 auto", padding: "16px 20px" }}
         >
-          <span
-            className="text-white"
-            style={{ fontSize: "12px", opacity: 0.4 }}
-          >
+          <span className="text-white" style={{ fontSize: "12px", opacity: 0.4 }}>
             All rights reserved by BigMama Network, 2026
           </span>
         </div>

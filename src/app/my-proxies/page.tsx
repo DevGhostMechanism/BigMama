@@ -28,7 +28,8 @@ export default function MyProxiesPage() {
           style={{
             display: "flex",
             borderBottom: "1px solid #e5e7eb",
-            padding: "0 24px",
+            padding: "0 16px",
+            overflowX: "auto",
           }}
         >
           {(["ACTIVE PROXIES", "HISTORY"] as const).map((tab) => {
@@ -59,7 +60,7 @@ export default function MyProxiesPage() {
         </div>
 
         {/* Filter */}
-        <div style={{ padding: "16px 24px" }}>
+        <div style={{ padding: "16px" }}>
           <input
             placeholder="Filter by IP address, location or ISP"
             style={{
@@ -77,7 +78,7 @@ export default function MyProxiesPage() {
         </div>
 
         {/* Table */}
-        <div style={{ flex: 1, overflow: "auto", padding: "0 24px" }}>
+        <div style={{ flex: 1, overflow: "auto", padding: "0 16px" }}>
           <table
             style={{
               width: "100%",

@@ -85,10 +85,10 @@ export default function Pricing() {
       id="pricing-section"
       style={{ padding: "80px 0" }}
     >
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         {/* Title */}
-        <div style={{ marginBottom: "40px", fontSize: "48px" }}>
-          <h2 className="text-center font-bold text-[#0f0720]">Pricing</h2>
+        <div style={{ marginBottom: "40px" }}>
+          <h2 className="text-center font-bold text-[#0f0720]" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>Pricing</h2>
         </div>
 
         {/* Cards */}

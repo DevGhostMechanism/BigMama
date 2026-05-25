@@ -43,7 +43,7 @@ export default function RotatingPage() {
      <Header/>
 
       {/* Body */}
-      <div style={{ padding: "28px 28px" }}>
+      <div style={{ padding: "20px 16px" }}>
         {/* Title row */}
         <div
           style={{

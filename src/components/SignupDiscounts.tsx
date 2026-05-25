@@ -7,16 +7,18 @@ const discounts = [
 export default function SignupDiscounts() {
   return (
     <section className="w-full bg-[#fcfcfc]" style={{ padding: "80px 0" }}>
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
-        <div className="flex items-center">
-          {/* Left — content */}
-          <div
-            className="flex flex-col justify-center items-start"
-            style={{ width: "50%" }}
-          >
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          {/* Content */}
+          <div className="flex flex-col justify-center items-start w-full md:w-1/2">
             <h2
               className="font-bold text-[#0f0720]"
-              style={{ fontFamily: "Poppins, sans-serif", fontSize: "2.8em", lineHeight: 1.5, marginBottom: "0" }}
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: "clamp(28px, 4vw, 45px)",
+                lineHeight: 1.5,
+                marginBottom: "0",
+              }}
             >
               Sign-up Discounts
             </h2>
@@ -28,25 +30,22 @@ export default function SignupDiscounts() {
               depending on the deposit amount.
             </p>
 
-            {/* Discount list */}
             <div
               className="flex flex-wrap items-center"
-              style={{ marginTop: "40px" }}
+              style={{ marginTop: "32px" }}
             >
               {discounts.map((item, index) => (
                 <div
                   key={index}
                   className="flex items-center"
-                  style={{ paddingRight: "55px", paddingBottom: "15px" }}
+                  style={{ paddingRight: "40px", paddingBottom: "15px" }}
                 >
-                  {/* Percent */}
                   <span
                     className="font-bold text-[#4c97ff]"
                     style={{ fontFamily: "Poppins, sans-serif", fontSize: "1.2em", lineHeight: 1.17 }}
                   >
                     {item.percent}
                   </span>
-                  {/* Range — with bullet dot */}
                   <span
                     className="text-[#0f0720] relative"
                     style={{
@@ -67,11 +66,11 @@ export default function SignupDiscounts() {
             </div>
           </div>
 
-          {/* Right — illustration as background */}
+          {/* Illustration */}
           <div
+            className="w-full md:w-1/2"
             style={{
-              width: "50%",
-              height: "500px",
+              height: "300px",
               backgroundImage: "url(/images/bg-illustration_man.svg)",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",

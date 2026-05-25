@@ -4,6 +4,8 @@ import sql from '@/app/lib/db'
 import { createSession } from '@/app/lib/session'
 import { LoginSchema } from '@/app/lib/definitions'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   let body: unknown
   try {
@@ -22,7 +24,7 @@ export async function POST(request: NextRequest) {
   const rows = await sql`
     SELECT id, password_hash FROM users WHERE email = ${email} LIMIT 1
   `
-  const user = rows[0]
+  const user = rows[0] as { id: number; password_hash: string } | undefined
 
   if (!user || !(await bcrypt.compare(password, user.password_hash))) {
     return Response.json({ error: 'Invalid credentials' }, { status: 401 })

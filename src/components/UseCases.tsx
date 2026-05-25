@@ -18,14 +18,13 @@ const useCases = [
 export default function UseCases() {
   return (
     <section className="bg-[#fcfcfc]" style={{ padding: "80px 0" }}>
-      {/* Title */}
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         <div style={{ marginBottom: "50px" }}>
           <h2
             className="text-center font-bold text-[#0f0720]"
             style={{
               marginBottom: "0",
-              fontSize: "42px",
+              fontSize: "clamp(26px, 4vw, 42px)",
               fontFamily: "Poppins, sans-serif",
             }}
           >
@@ -35,7 +34,7 @@ export default function UseCases() {
           </h2>
           <p
             className="text-center text-[#0f0720] mx-auto"
-            style={{ opacity: 0.5, fontSize: "18px", marginTop: "25px" }}
+            style={{ opacity: 0.5, fontSize: "clamp(14px, 1.5vw, 18px)", marginTop: "25px" }}
           >
             With the unprecedented selection and quality of our proxy network,
             all your business needs can be covered
@@ -43,14 +42,13 @@ export default function UseCases() {
         </div>
       </div>
 
-      {/* Items grid */}
-      <div style={{ maxWidth: "1550px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1550px", margin: "0 auto", padding: "0 20px" }}>
         <ul className="flex flex-wrap justify-center items-center">
           {useCases.map((item, index) => (
             <li
               key={index}
-              className="flex items-center justify-start"
-              style={{ width: "25%", padding: "0 35px 90px 35px" }}
+              className="w-1/2 md:w-1/4 flex items-center justify-start"
+              style={{ padding: "0 24px 60px 24px" }}
             >
               <Image
                 src={item.icon}
@@ -62,7 +60,7 @@ export default function UseCases() {
               />
               <span
                 className="text-[#0f0720] font-medium"
-                style={{ fontSize: "18px", marginLeft: "10px" }}
+                style={{ fontSize: "clamp(14px, 1.5vw, 18px)", marginLeft: "10px" }}
               >
                 {item.label}
               </span>
@@ -71,11 +69,10 @@ export default function UseCases() {
         </ul>
       </div>
 
-      {/* Bottom large text */}
-      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 40px" }}>
+      <div style={{ maxWidth: "1650px", margin: "0 auto", padding: "0 20px" }}>
         <p
           className="text-center font-bold text-[#0f0720] uppercase"
-          style={{ fontSize: "42px", fontFamily: "Poppins, sans-serif" }}
+          style={{ fontSize: "clamp(24px, 4vw, 42px)", fontFamily: "Poppins, sans-serif" }}
         >
           ..as well as any others
         </p>

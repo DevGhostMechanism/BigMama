@@ -39,6 +39,7 @@ function ChevronRight() {
 }
 
 export default function PaymentsPage() {
+  const router = useRouter();
   const today = new Date();
   const currentDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const [firstDate, setFirstDate] = useState(currentDate);
@@ -58,7 +59,7 @@ export default function PaymentsPage() {
       <Header />
 
       {/* Body */}
-      <div style={{ padding: "24px 28px" }}>
+      <div style={{ padding: "20px 16px", overflowX: "auto" }}>
         {/* Title + Add Funds */}
         <div
           style={{
@@ -79,6 +80,7 @@ export default function PaymentsPage() {
             Payments
           </h2>
           <button
+            onClick={() => router.push("/add-funds")}
             style={{
               background: "none",
               border: "none",
@@ -98,7 +100,8 @@ export default function PaymentsPage() {
         <div
           style={{
             display: "flex",
-            gap: "24px",
+            flexWrap: "wrap",
+            gap: "16px",
             marginBottom: "28px",
             alignItems: "center",
           }}
@@ -221,7 +224,7 @@ export default function PaymentsPage() {
         </table>
 
         {/* Pagination */}
-        <div
+        {/* <div
           style={{
             display: "flex",
             alignItems: "center",
@@ -254,7 +257,7 @@ export default function PaymentsPage() {
           >
             <ChevronRight />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
