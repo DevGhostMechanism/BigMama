@@ -254,16 +254,20 @@ function AuthForm() {
 
           {tab === "login" && (
             <div style={{ textAlign: "center", marginBottom: "8px" }}>
-              <a
-                href="#"
+              <span
                 style={{
-                  color: "#3b82f6",
+                  color: "#9ca3af",
                   fontSize: "13px",
-                  textDecoration: "underline",
                 }}
               >
-                Don&apos;t remember your password?
-              </a>
+                Forgot your password? Contact{" "}
+                <a
+                  href="mailto:support@bigmama.network"
+                  style={{ color: "#3b82f6", textDecoration: "underline" }}
+                >
+                  support@bigmama.network
+                </a>
+              </span>
             </div>
           )}
 
@@ -317,11 +321,11 @@ function AuthForm() {
                   }}
                 >
                   Before you sign up, you must accept our{" "}
-                  <a href="#" style={{ color: "#3b82f6" }}>
+                  <a href="/terms_conditions.html" style={{ color: "#3b82f6" }}>
                     Terms and Conditions
                   </a>{" "}
                   and{" "}
-                  <a href="#" style={{ color: "#3b82f6" }}>
+                  <a href="/privacy.html" style={{ color: "#3b82f6" }}>
                     Privacy Policy
                   </a>
                 </label>
@@ -389,7 +393,7 @@ function AuthForm() {
 
 export default function AuthPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<div style={{ minHeight: "100vh", backgroundColor: "#fff" }} />}>
       <AuthForm />
     </Suspense>
   );

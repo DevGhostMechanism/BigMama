@@ -90,7 +90,7 @@ export default function MyProxiesPage() {
               <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
                 {[
                   "IP Address",
-                  "Coun",
+                  "Country",
                   "Region",
                   "City",
                   "ZIP",

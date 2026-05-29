@@ -22,8 +22,8 @@ const drawerNavItems = [
 ];
 
 const drawerFooterItems = [
-  { label: "Terms and Conditions", href: "" },
-  { label: "Privacy Policy", href: "" },
+  { label: "Terms and Conditions", href: "/terms_conditions.html" },
+  { label: "Privacy Policy", href: "/privacy.html" },
 ];
 
 function Header() {
@@ -278,8 +278,8 @@ function Header() {
                 <div style={{ padding: "6px 0" }}>
                   {[
                     { label: "Referral", href: "/referral" },
-                    { label: "Terms and Conditions", href: "" },
-                    { label: "Privacy Policy", href: "" },
+                    { label: "Terms and Conditions", href: "/terms_conditions.html" },
+                    { label: "Privacy Policy", href: "/privacy.html" },
                   ].map((item) => (
                     <button
                       key={item.label}
@@ -314,7 +314,6 @@ function Header() {
 
                 <div style={{ padding: "6px 0" }}>
                   {[
-                    { label: "Change Password", href: "" },
                     { label: "Logout", href: "/auth" },
                   ].map((item) => (
                     <button

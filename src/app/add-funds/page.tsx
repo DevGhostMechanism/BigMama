@@ -153,7 +153,7 @@ export default function AddFundsPage() {
             }}
           >
             Please note that balance cannot be refunded to currency. See our{" "}
-            <Link href="" style={{ color: "#3b82f6", textDecoration: "none" }}>
+            <Link href="/terms_conditions.html" style={{ color: "#3b82f6", textDecoration: "none" }}>
               Terms and Conditions
             </Link>{" "}
             for more details.

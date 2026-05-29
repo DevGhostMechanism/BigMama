@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://big-mama-rho.vercel.app",
-];
+const allowedOrigins =
+  process.env.NODE_ENV === "development"
+    ? ["http://localhost:3000", "https://big-mama-rho.vercel.app"]
+    : ["https://bigmama.click"];
 
 const nextConfig: NextConfig = {
   async headers() {
